@@ -1,0 +1,117 @@
+
+PHẦN 1: PHÂN TÍCH
+
+- Bài này có file deploy.ps1 dùng để cập nhật hệ thống.
+
+- Lúc đầu em đang ở thư mục:
+
+C:\Users<User>\Desktop
+
+- Nhưng file deploy.ps1 lại nằm ở:
+
+C:\Users<User>\Downloads\Project
+
+- Bước 1: Kiểm tra thư mục hiện tại
+
+- Em dùng lệnh:
+
+Get-Location
+
+- Hoặc:
+
+pwd
+
+=>Kết quả cho biết em đang ở thư mục Desktop.
+
+- Bước 2: Kiểm tra các file trong thư mục
+
+- Em dùng:
+
+Get-ChildItem
+
+- Hoặc:
+
+dir
+
+=>Sau khi kiểm tra thì không thấy file deploy.ps1 trong Desktop.
+
+- Vì vậy khi gõ:
+
+deploy.ps1
+
+=>PowerShell báo lỗi không tìm thấy file/script.
+
+- Bước 3: Tìm đúng vị trí file
+
+- File deploy.ps1 nằm trong:
+
+C:\Users<User>\Downloads\Project
+
+=>Do đó em phải di chuyển đến thư mục này trước.
+
+- Trong PowerShell, nếu file script nằm trong thư mục hiện tại thì thường phải chạy bằng:
+
+.\deploy.ps1
+
+- Dấu .\ có nghĩa là file nằm trong thư mục hiện tại.
+
+- Nếu đang ở sai thư mục thì:
+
+.\deploy.ps1
+
+=>cũng không chạy được vì PowerShell không tìm thấy file ở thư mục hiện tại.
+
+=>Lỗi trong bài này chủ yếu là do không tìm thấy file, không phải lỗi PermissionDenied.
+
+PHẦN 2: SỬA LỖI
+
+- Đầu tiên kiểm tra vị trí hiện tại:
+
+Get-Location
+
+- Kiểm tra file:
+
+Get-ChildItem
+
+- Sau đó di chuyển từ Desktop đến Downloads\Project:
+
+cd ..\Downloads\Project
+
+- Hoặc:
+
+Set-Location ..\Downloads\Project
+
+- Kiểm tra lại vị trí:
+
+Get-Location
+
+- Kiểm tra file deploy.ps1 có tồn tại không:
+
+Test-Path .\deploy.ps1
+
+- Nếu kết quả là:
+
+True
+
+=>thì file đã được tìm thấy.
+
+- Cuối cùng chạy file:
+
+.\deploy.ps1
+
+- CÁC LỆNH ĐẦY ĐỦ
+
+Get-Location
+Get-ChildItem
+cd ..\Downloads\Project
+Get-Location
+Test-Path .\deploy.ps1
+.\deploy.ps1
+
+=>KẾT LUẬN
+
+Nguyên nhân lỗi là do ban đầu em đang ở Desktop nhưng file deploy.ps1 nằm trong Downloads\Project.
+
+Sau khi chuyển đến đúng thư mục thì có thể kiểm tra file bằng Test-Path và chạy file bằng:
+
+.\deploy.ps1
